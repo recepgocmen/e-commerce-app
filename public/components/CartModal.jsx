@@ -5,8 +5,7 @@ import { Box } from "@mui/material";
 import { Typography } from "@mui/material";
 
 const CartModal = () => {
-  const { isOpen, handleClose, setIsOpen, toggleModal } =
-    useContext(AppContext);
+  const { isOpen, handleClose } = useContext(AppContext);
 
   const cartItems = [];
 

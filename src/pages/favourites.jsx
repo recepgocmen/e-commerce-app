@@ -1,16 +1,13 @@
-import React from "react";
-import Navbar from "../public/components/Navbar";
-import { AppProvider } from "../public/context/AppContext";
+import Navbar from "../../public/components/Navbar";
+import FavouritesArea from "../../public/components/FavouritesArea";
 
-function favourites() {
+const Favourites = () => {
   return (
     <>
-      <AppProvider>
-        <Navbar />
-        <div>favourites</div>;
-      </AppProvider>
+      <Navbar />
+      <FavouritesArea />
     </>
   );
-}
+};
 
-export default favourites;
+export default Favourites;

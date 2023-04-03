@@ -5,7 +5,7 @@ const Home = () => {
   return (
     <>
       <Navbar />
-      <MainArea />
+      <MainArea /> {/*  includes welcome title and product cards */}
     </>
   );
 };

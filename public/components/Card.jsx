@@ -1,41 +1,34 @@
-import * as React from "react";
-import { useContext } from "react";
-import { styled } from "@mui/material/styles";
-import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
-import CardMedia from "@mui/material/CardMedia";
-import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
+import {
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  CardMedia,
+  IconButton,
+  Typography,
+} from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import AppContext from "../context/AppContext";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { useState } from "react";
 
-const ExpandMore = styled((props) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
-  marginLeft: "auto",
-  transition: theme.transitions.create("transform", {
-    duration: theme.transitions.duration.shortest,
-  }),
-}));
-
-export default function RecipeReviewCard({ data }) {
+export default function RecipeReviewCard({ data, addFavourite }) {
   const { id, title, images, price, description } = data;
+  const [isFavourite, setIsFavourite] = useState(false);
+
   return (
     <Card
       sx={{
-        maxWidth: 345,
-        maxHeight: 600,
+        width: 345,
+        height: 550,
+        marginY: 4,
+        position: "relative", // Add position relative to the card container
       }}
     >
       <CardMedia
         sx={{
-          maxWidth: 345,
-          maxHeight: 300,
+          minWidth: 300,
+          minHeight: 300,
         }}
         component="img"
         height="50"
@@ -45,26 +38,45 @@ export default function RecipeReviewCard({ data }) {
       <CardHeader
         action={
           <div>
-            <IconButton aria-label="add to favorites">
-              <FavoriteIcon />
+            <IconButton
+              aria-label="add to favorites"
+              onClick={() => {
+                setIsFavourite(!isFavourite);
+                addFavourite(id);
+              }}
+            >
+              <FavoriteIcon color={isFavourite ? "error" : "inherit"} />
             </IconButton>
           </div>
         }
+        sx={{ textAlign: "left" }}
         title={title}
         subheader={`price: $${price}`}
       />
 
-      <CardContent>
+      <CardContent
+        sx={{
+          minHeight: 60,
+          textAlign: "left",
+        }}
+      >
         <Typography variant="body2" color="text.secondary">
           {description}
         </Typography>
       </CardContent>
-      <CardActions disableSpacing>
+
+      <CardActions
+        disableSpacing
+        sx={{ position: "absolute", bottom: 0, right: 0 }}
+      >
         <IconButton aria-label="add to cart">
           <ShoppingCartIcon />
           <Typography variant="button" display="inline">
             Add to Cart
           </Typography>
+        </IconButton>
+        <IconButton aria-label="delete">
+          <DeleteIcon />
         </IconButton>
       </CardActions>
     </Card>

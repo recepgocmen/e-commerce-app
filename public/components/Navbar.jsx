@@ -4,9 +4,7 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -16,15 +14,8 @@ import { useContext } from "react";
 import AppContext from "../context/AppContext";
 
 export default function ButtonAppBar() {
-  const {
-    darkMode,
-    setDarkMode,
-    cartCount,
-    setCartCount,
-    favouritesCount,
-    setFavouritesCount,
-    toggleModal,
-  } = useContext(AppContext);
+  const { darkMode, setDarkMode, cartCount, favouritesCount, toggleModal } =
+    useContext(AppContext);
 
   return (
     <Box>

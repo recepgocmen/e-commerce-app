@@ -1,5 +1,21 @@
-import '@/styles/globals.css'
+import "../styles/globals.css";
+import { AppProvider } from "../../public/context/AppContext";
+import { SWRConfig } from "swr";
 
-export default function App({ Component, pageProps }) {
-  return <Component {...pageProps} />
+function MyApp({ Component, pageProps }) {
+  return (
+    <SWRConfig
+      value={{
+        shouldRetryOnError: false,
+        revalidateOnFocus: false,
+        refreshInterval: 0,
+      }}
+    >
+      <AppProvider>
+        <Component {...pageProps} />
+      </AppProvider>
+    </SWRConfig>
+  );
 }
+
+export default MyApp;

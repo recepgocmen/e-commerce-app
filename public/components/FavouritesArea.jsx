@@ -7,22 +7,46 @@ import useSWR from "swr";
 import AppContext from "../context/AppContext";
 
 function FavouritesArea() {
-  const { data, isLoading, favouriteData, setFavouriteData } =
-    useContext(AppContext);
+  const {
+    darkMode,
+    isLoading,
+    favouriteData,
+    setFavouriteData,
+    isFavourite,
+    setIsFavourite,
+    favouritesCount,
+    setFavouritesCount,
+    favorites,
+    setFavorites,
+  } = useContext(AppContext);
   console.log("favourite data", favouriteData);
   // console.log(data);
   return (
     <>
-      <Box sx={{ textAlign: "center", paddingX: 12, backgroundColor: "blue" }}>
-        <Typography variant="h5" className={{ marginY: 4 }}>
-          Welcome to BuyMe
-        </Typography>
+      <Box
+        sx={{
+          textAlign: "center",
+          paddingX: 12,
+          backgroundColor: darkMode ? "black" : "white",
+        }}
+      >
+        <Typography variant="h3">Favourites</Typography>
         {isLoading ? (
           <Typography
             variant="h5"
             sx={{ color: "red", textAlign: "center", margin: "24px" }}
           >
             Loading...
+          </Typography>
+        ) : favouriteData.length === 0 ? (
+          <Typography
+            sx={{
+              paddingTop: 40,
+              minHeight: 850,
+              color: darkMode ? "white" : "red",
+            }}
+          >
+            You dont have any favourite product yet
           </Typography>
         ) : (
           <div style={{ display: "flex", flexWrap: "wrap" }}>

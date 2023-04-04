@@ -19,7 +19,7 @@ export default function ButtonAppBar() {
 
   return (
     <Box>
-      <AppBar position="static">
+      <AppBar sx={{ backgroundColor: darkMode && "gray" }} position="static">
         <Toolbar>
           <IconButton
             size="large"

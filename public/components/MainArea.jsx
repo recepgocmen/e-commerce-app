@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import { Box } from "@mui/material";
 import { Typography } from "@mui/material";
 import Card from "../components/Card";
@@ -7,7 +8,11 @@ import useSWR from "swr";
 import AppContext from "../context/AppContext";
 
 function MainArea() {
-  const { setFavouriteData, favouriteData } = useContext(AppContext);
+  const { setFavouriteData, favouriteData, id, setId } = useContext(AppContext);
+  const router = useRouter();
+  const { detail } = router?.query;
+  console.log(router);
+
   const fetcher = () =>
     fetch("https://dummyjson.com/products")
       .then((res) => res.json())
@@ -26,6 +31,11 @@ function MainArea() {
     }
     setFavouriteData(favouriteData);
   }
+
+  const idHandler = (id) => {
+    setId(id);
+    router?.push(`/${id}`);
+  };
 
   return (
     <>
@@ -46,7 +56,12 @@ function MainArea() {
           <div style={{ display: "flex", flexWrap: "wrap" }}>
             {data?.map((item) => (
               <div style={{ flex: "30%" }}>
-                <Card key={item.id} data={item} addFavourite={addFavourite} />
+                <Card
+                  key={item.id}
+                  data={item}
+                  addFavourite={addFavourite}
+                  idHandler={idHandler}
+                />
               </div>
             ))}
           </div>

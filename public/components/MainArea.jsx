@@ -8,7 +8,14 @@ import useSWR from "swr";
 import AppContext from "../context/AppContext";
 
 function MainArea() {
-  const { setFavouriteData, favouriteData, id, setId } = useContext(AppContext);
+  const {
+    setFavouriteData,
+    favouriteData,
+    setFavouritesCount,
+    id,
+    setId,
+    darkMode,
+  } = useContext(AppContext);
   const router = useRouter();
   const { detail } = router?.query;
   console.log(router);
@@ -30,6 +37,7 @@ function MainArea() {
       favouriteData.filter((item) => item.id !== id);
     }
     setFavouriteData(favouriteData);
+    setFavouritesCount(favouriteData?.length);
   }
 
   const idHandler = (id) => {
@@ -40,9 +48,17 @@ function MainArea() {
   return (
     <>
       <Box
-        sx={{ textAlign: "center", paddingX: 12, backgroundColor: "orange" }}
+        sx={{
+          textAlign: "center",
+          paddingX: 12,
+          backgroundColor: darkMode ? "black" : "white",
+        }}
       >
-        <Typography variant="h5" sx={{ paddingY: 4 }}>
+        <Typography
+          variant="h3"
+          sx={{ paddingY: 4 }}
+          color={darkMode ? "white" : "black"}
+        >
           Welcome to BuyMe
         </Typography>
         {isLoading ? (

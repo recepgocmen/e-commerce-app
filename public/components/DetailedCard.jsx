@@ -11,11 +11,18 @@ import {
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useState } from "react";
+import RemoveIcon from "@mui/icons-material/Remove";
+import AddIcon from "@mui/icons-material/Add";
 
-export default function RecipeReviewCard({ data, addFavourite }) {
+export default function RecipeReviewCard({
+  data,
+  addFavourite,
+  isFavourite,
+  setIsFavourite,
+  productCount,
+  setProductCount,
+}) {
   const { id, title, images, price, description } = data;
-  const [isFavourite, setIsFavourite] = useState(false);
 
   return (
     <Box
@@ -48,19 +55,6 @@ export default function RecipeReviewCard({ data, addFavourite }) {
         />
         <CardContent sx={{ flex: 1 }}>
           <CardHeader
-            action={
-              <div>
-                <IconButton
-                  aria-label="add to favourites"
-                  onClick={() => {
-                    setIsFavourite(!isFavourite);
-                    addFavourite(id);
-                  }}
-                >
-                  <FavoriteIcon color={isFavourite ? "error" : "inherit"} />
-                </IconButton>
-              </div>
-            }
             sx={{ textAlign: "left" }}
             title={title}
             subheader={`price: $${price}`}
@@ -69,21 +63,68 @@ export default function RecipeReviewCard({ data, addFavourite }) {
           <Typography variant="body2" color="text.secondary">
             {description}
           </Typography>
-
-          <CardActions
-            disableSpacing
-            sx={{ position: "absolute", bottom: 0, right: 0 }}
+          <Box
+            sx={{ display: "flex", alignItems: "center", position: "relative" }}
           >
-            <IconButton aria-label="add to cart">
-              <ShoppingCartIcon />
-              <Typography variant="button" display="inline">
-                Add to Cart
-              </Typography>
+            <IconButton
+              onClick={() =>
+                setProductCount((productCount) => productCount - 1)
+              }
+              disabled={productCount === 0}
+            >
+              <RemoveIcon />
             </IconButton>
-            <IconButton aria-label="delete">
+            <Typography variant="h6" mx={2}>
+              {productCount}
+            </Typography>
+            <IconButton
+              onClick={() =>
+                setProductCount((productCount) => productCount + 1)
+              }
+            >
+              <AddIcon />
+            </IconButton>
+            <IconButton onClick={() => deleteItem(item.id)}>
               <DeleteIcon />
             </IconButton>
-          </CardActions>
+          </Box>
+
+          <Box
+            sx={{
+              position: "absolute",
+              bottom: 0,
+              right: 0,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "flex-end",
+              alignItems: "flex-end",
+              margin: "10px",
+            }}
+          >
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Typography variant="h6" mr={1}>
+                Total:
+              </Typography>
+              <Typography variant="h6">{`$ ${
+                price * productCount
+              }`}</Typography>
+            </Box>
+
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <IconButton aria-label="add to cart">
+                <ShoppingCartIcon />
+              </IconButton>
+              <IconButton
+                aria-label="add to favourites"
+                onClick={() => {
+                  setIsFavourite(!isFavourite);
+                  addFavourite(id);
+                }}
+              >
+                <FavoriteIcon color={isFavourite ? "error" : "inherit"} />
+              </IconButton>
+            </Box>
+          </Box>
         </CardContent>
       </Card>
     </Box>

@@ -1,5 +1,5 @@
 import Modal from "@mui/material/Modal";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import AppContext from "../context/AppContext";
 import { Box, CardMedia } from "@mui/material";
 import { Typography, IconButton } from "@mui/material";
@@ -8,9 +8,15 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 const CartModal = () => {
-  const { isOpen, handleClose, cartData, setCartData, setCartCount } =
-    useContext(AppContext);
-  const [productCount, setProductCount] = useState(1);
+  const {
+    isOpen,
+    handleClose,
+    cartData,
+    setCartData,
+    setCartCount,
+    productCount,
+    setProductCount,
+  } = useContext(AppContext);
 
   const deleteItem = (id) => {
     const newCartData = cartData.filter((item) => item.id !== id);

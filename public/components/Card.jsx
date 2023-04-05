@@ -12,7 +12,13 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useState } from "react";
 
-export default function RecipeReviewCard({ data, addFavourite }) {
+export default function CardComponent({
+  data,
+  addFavourite,
+  idHandler,
+  enableDeleteButton = false,
+  addToCart,
+}) {
   const { id, title, images, price, description } = data;
   const [isFavourite, setIsFavourite] = useState(false);
 
@@ -34,12 +40,13 @@ export default function RecipeReviewCard({ data, addFavourite }) {
         height="50"
         image={images[0]}
         alt={`product ${id} image`}
+        onClick={() => idHandler(id)}
       />
       <CardHeader
         action={
           <div>
             <IconButton
-              aria-label="add to favorites"
+              aria-label="add to favourites"
               onClick={() => {
                 setIsFavourite(!isFavourite);
                 addFavourite(id);
@@ -69,15 +76,17 @@ export default function RecipeReviewCard({ data, addFavourite }) {
         disableSpacing
         sx={{ position: "absolute", bottom: 0, right: 0 }}
       >
-        <IconButton aria-label="add to cart">
+        <IconButton aria-label="add to cart" onClick={() => console.log(id)}>
           <ShoppingCartIcon />
           <Typography variant="button" display="inline">
             Add to Cart
           </Typography>
         </IconButton>
-        <IconButton aria-label="delete">
-          <DeleteIcon />
-        </IconButton>
+        {enableDeleteButton && (
+          <IconButton aria-label="delete">
+            <DeleteIcon />
+          </IconButton>
+        )}
       </CardActions>
     </Card>
   );

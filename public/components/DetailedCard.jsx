@@ -51,7 +51,7 @@ export default function RecipeReviewCard({ data, addFavourite }) {
             action={
               <div>
                 <IconButton
-                  aria-label="add to favorites"
+                  aria-label="add to favourites"
                   onClick={() => {
                     setIsFavourite(!isFavourite);
                     addFavourite(id);

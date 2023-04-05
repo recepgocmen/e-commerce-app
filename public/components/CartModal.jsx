@@ -1,5 +1,5 @@
 import Modal from "@mui/material/Modal";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import AppContext from "../context/AppContext";
 import { Box, CardMedia } from "@mui/material";
 import { Typography, IconButton } from "@mui/material";
@@ -34,8 +34,6 @@ const CartModal = () => {
     setCartData(newCartData);
   };
 
-  console.log("cartData", cartData);
-
   return (
     <Modal
       open={isOpen}
@@ -54,7 +52,7 @@ const CartModal = () => {
           minWidth: "700px",
           minHeight: "700px",
           overflow: "scroll",
-          maxHeight: "80vh", // add this line
+          maxHeight: "80vh",
         }}
       >
         <Typography

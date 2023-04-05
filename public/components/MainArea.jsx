@@ -9,17 +9,14 @@ import AppContext from "../context/AppContext";
 
 function MainArea() {
   const {
-    setFavouriteData,
-    favouriteData,
-    setFavouritesCount,
     darkMode,
     setCartData,
     cartData,
     setCartCount,
     isFavourite,
     setIsFavourite,
-    setId,
     id,
+    setId,
     addFavourite,
   } = useContext(AppContext);
 
@@ -41,7 +38,7 @@ function MainArea() {
     fetcher
   );
 
-  function addToCart(id) {
+  const addToCart = (id) => {
     const selectedProduct = data.find((item) => item.id === id);
 
     // Check if the product is already in the cart
@@ -51,7 +48,7 @@ function MainArea() {
       setCartData((prevCartData) => [...prevCartData, selectedProduct]);
       setCartCount((prevCount) => prevCount + 1);
     }
-  }
+  };
 
   return (
     <>

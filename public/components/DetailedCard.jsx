@@ -26,6 +26,21 @@ export default function RecipeReviewCard({ data }) {
     darkMode,
   } = useContext(AppContext);
   const { id, title, images, price, description } = data;
+  const [selectedProductIds, setSelectedProductIds] = useState([]);
+
+  const handleFavourite = () => {
+    setIsFavourite(!isFavourite);
+    addFavourite(id);
+
+    // Toggle the selected product's id
+    if (selectedProductIds.includes(id)) {
+      setSelectedProductIds(
+        selectedProductIds.filter((productId) => productId !== id)
+      );
+    } else {
+      setSelectedProductIds([...selectedProductIds, id]);
+    }
+  };
 
   return (
     <Box
@@ -39,18 +54,18 @@ export default function RecipeReviewCard({ data }) {
     >
       <Card
         sx={{
-          width: 1200, // double the original width
+          width: 1200,
           height: 550,
           marginY: 4,
           position: "relative",
-          display: "flex", // use flexbox to align CardMedia and CardContent
+          display: "flex",
         }}
       >
         <CardMedia
           sx={{
             minWidth: 300,
             minHeight: 550,
-            flex: 1, // set flex property to 1 to take up remaining space
+            flex: 1,
           }}
           component="img"
           height="50"
@@ -122,10 +137,12 @@ export default function RecipeReviewCard({ data }) {
                 aria-label="add to favourites"
                 onClick={() => {
                   setIsFavourite(!isFavourite);
-                  addFavourite(id);
+                  handleFavourite();
                 }}
               >
-                <FavoriteIcon color={isFavourite ? "error" : "inherit"} />
+                <FavoriteIcon
+                  color={selectedProductIds.includes(id) ? "error" : "inherit"}
+                />
               </IconButton>
             </Box>
           </Box>

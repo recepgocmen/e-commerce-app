@@ -12,14 +12,15 @@ function MainArea() {
     setFavouriteData,
     favouriteData,
     setFavouritesCount,
+    addToCart,
     id,
     setId,
     darkMode,
   } = useContext(AppContext);
-  const router = useRouter();
-  const { detail } = router?.query;
-  console.log(router);
 
+  const router = useRouter();
+
+  //fetching data for main area
   const fetcher = () =>
     fetch("https://dummyjson.com/products")
       .then((res) => res.json())
@@ -29,10 +30,12 @@ function MainArea() {
     "https://dummyjson.com/api/products",
     fetcher
   );
+
   function addFavourite(id) {
     const itemToAdd = data.find((item) => item.id === id);
     if (!favouriteData.includes(itemToAdd)) {
       favouriteData.push(itemToAdd);
+      //second click on hearth icon, unfav condition
     } else if (favouriteData.includes(itemToAdd)) {
       favouriteData.filter((item) => item.id !== id);
     }
@@ -40,6 +43,7 @@ function MainArea() {
     setFavouritesCount(favouriteData?.length);
   }
 
+  //for accessing card details
   const idHandler = (id) => {
     setId(id);
     router?.push(`/${id}`);
@@ -77,6 +81,7 @@ function MainArea() {
                   data={item}
                   addFavourite={addFavourite}
                   idHandler={idHandler}
+                  addToCart={addToCart}
                 />
               </div>
             ))}

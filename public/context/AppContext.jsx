@@ -5,13 +5,14 @@ const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
   const [darkMode, setDarkMode] = useState(false);
-  const [cart, setCart] = useState([]);
-  const [favorites, setFavorites] = useState([]);
+  const [cartData, setCartData] = useState([]);
+  const [favourites, setFavourites] = useState([]);
   const [cartCount, setCartCount] = useState(0);
   const [favouritesCount, setFavouritesCount] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
   const [isFavourite, setIsFavourite] = useState(false);
   const [favouriteData, setFavouriteData] = useState([]);
+  const [id, setId] = useState(1);
 
   const fetcher = () =>
     fetch("https://dummyjson.com/products")
@@ -31,34 +32,36 @@ export const AppProvider = ({ children }) => {
   };
 
   const addToCart = (item) => {
-    setCart([...cart, item]);
+    setCartData([...cartData, item]);
+    console.log(cartData);
     setCartCount((prevCount) => prevCount + 1);
   };
 
   const removeFromCart = (item) => {
-    setCart(cart.filter((i) => i.id !== item.id));
+    setCartData(cartData.filter((i) => i.id !== item.id));
     setCartCount((prevCount) => prevCount - 1);
   };
 
-  const addToFavorites = (item) => {
-    setFavorites([...favorites, item]);
+  const addToFavourites = (item) => {
+    setFavourites([...favourites, item]);
     setFavouritesCount((prevCount) => prevCount + 1);
   };
 
-  const removeFromFavorites = (item) => {
-    setFavorites(favorites.filter((i) => i.id !== item.id));
+  const removeFromFavourites = (item) => {
+    setFavourites(favourites.filter((i) => i.id !== item.id));
     setFavouritesCount((prevCount) => prevCount - 1);
   };
 
   const value = {
     darkMode,
     setDarkMode,
-    cart,
+    cartData,
+    setCartData,
     addToCart,
     removeFromCart,
-    favorites,
-    addToFavorites,
-    removeFromFavorites,
+    favourites,
+    addToFavourites,
+    removeFromFavourites,
     cartCount,
     setCartCount,
     favouritesCount,
@@ -73,6 +76,8 @@ export const AppProvider = ({ children }) => {
     setIsFavourite,
     favouriteData,
     setFavouriteData,
+    id,
+    setId,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

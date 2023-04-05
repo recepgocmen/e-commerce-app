@@ -5,9 +5,7 @@ import { Box } from "@mui/material";
 import { Typography } from "@mui/material";
 
 const CartModal = () => {
-  const { isOpen, handleClose } = useContext(AppContext);
-
-  const cartItems = [];
+  const { isOpen, handleClose, cartData } = useContext(AppContext);
 
   return (
     <Modal
@@ -19,24 +17,35 @@ const CartModal = () => {
       <Box
         sx={{
           position: "absolute",
-          top: "18%",
-          left: "85%",
-          transform: "translate(-50%, -50%)",
-          bgcolor: "background.paper",
+          top: "8%",
+          right: "5%",
+          backgroundColor: "white",
           boxShadow: 24,
           p: 4,
-          minWidth: "400px",
+          minWidth: "500px",
+          minHeight: "500px",
         }}
       >
-        <Typography id="modal-title" variant="h6" component="h2" mb={2}>
+        <Typography
+          id="modal-title"
+          variant="h6"
+          component="h2"
+          mb={2}
+          color={"black"}
+        >
           Shopping Cart
         </Typography>
-        {cartItems?.length === 0 ? (
-          <Typography id="modal-description" variant="body1" mb={2}>
+        {cartData.length === 0 ? (
+          <Typography
+            id="modal-description"
+            variant="body1"
+            mb={2}
+            color="black"
+          >
             Your cart is empty.
           </Typography>
         ) : (
-          cartItems.map((item) => (
+          cartData?.map((item) => (
             <Box key={item.id} sx={{ display: "flex", mb: 2 }}>
               <Box sx={{ flex: 1 }}>
                 <Image

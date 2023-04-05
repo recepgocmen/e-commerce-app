@@ -16,11 +16,10 @@ function FavouritesArea() {
     setIsFavourite,
     favouritesCount,
     setFavouritesCount,
-    favorites,
-    setFavorites,
+    favourites,
+    setFavourites,
   } = useContext(AppContext);
-  console.log("favourite data", favouriteData);
-  // console.log(data);
+
   return (
     <>
       <Box

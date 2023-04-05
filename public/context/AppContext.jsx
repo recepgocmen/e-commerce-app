@@ -13,6 +13,7 @@ export const AppProvider = ({ children }) => {
   const [isFavourite, setIsFavourite] = useState(false);
   const [favouriteData, setFavouriteData] = useState([]);
   const [id, setId] = useState(1);
+  const [productCount, setProductCount] = useState(1);
 
   const fetcher = () =>
     fetch("https://dummyjson.com/products")
@@ -42,10 +43,21 @@ export const AppProvider = ({ children }) => {
     setCartCount((prevCount) => prevCount - 1);
   };
 
-  const addToFavourites = (item) => {
-    setFavourites([...favourites, item]);
-    setFavouritesCount((prevCount) => prevCount + 1);
-  };
+  // const addToFavourites = (item) => {
+  //   setFavourites([...favourites, item]);
+  //   setFavouritesCount((prevCount) => prevCount + 1);
+  // };
+  function addFavourite(id) {
+    const selectedProduct = data.find((item) => item.id === id);
+    let newFavouriteData = [...favouriteData]; // create a copy of the array
+    if (!newFavouriteData.includes(selectedProduct)) {
+      newFavouriteData.push(selectedProduct);
+    } else if (newFavouriteData.includes(selectedProduct)) {
+      newFavouriteData = newFavouriteData.filter((item) => item.id !== id);
+    }
+    setFavouriteData(newFavouriteData);
+    setFavouritesCount(newFavouriteData.length);
+  }
 
   const removeFromFavourites = (item) => {
     setFavourites(favourites.filter((i) => i.id !== item.id));
@@ -60,7 +72,6 @@ export const AppProvider = ({ children }) => {
     addToCart,
     removeFromCart,
     favourites,
-    addToFavourites,
     removeFromFavourites,
     cartCount,
     setCartCount,
@@ -78,6 +89,9 @@ export const AppProvider = ({ children }) => {
     setFavouriteData,
     id,
     setId,
+    productCount,
+    setProductCount,
+    addFavourite,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

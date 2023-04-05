@@ -16,9 +16,19 @@ function MainArea() {
     setCartData,
     cartData,
     setCartCount,
+    isFavourite,
+    setIsFavourite,
+    setId,
+    id,
+    addFavourite,
   } = useContext(AppContext);
 
   const router = useRouter();
+
+  const idHandler = (id) => {
+    setId(id);
+    router?.push(`/${id}`);
+  };
 
   //fetching data from api with SWR
   const fetcher = () =>
@@ -30,18 +40,6 @@ function MainArea() {
     "https://dummyjson.com/api/products",
     fetcher
   );
-
-  function addFavourite(id) {
-    const selectedProduct = data.find((item) => item.id === id);
-    let newFavouriteData = [...favouriteData]; // create a copy of the array
-    if (!newFavouriteData.includes(selectedProduct)) {
-      newFavouriteData.push(selectedProduct);
-    } else if (newFavouriteData.includes(selectedProduct)) {
-      newFavouriteData = newFavouriteData.filter((item) => item.id !== id);
-    }
-    setFavouriteData(newFavouriteData);
-    setFavouritesCount(newFavouriteData.length);
-  }
 
   function addToCart(id) {
     const selectedProduct = data.find((item) => item.id === id);
@@ -88,7 +86,10 @@ function MainArea() {
                   key={item.id}
                   data={item}
                   addFavourite={addFavourite}
+                  isFavourite={isFavourite}
+                  setIsFavourite={setIsFavourite}
                   addToCart={addToCart}
+                  idHandler={idHandler}
                 />
               </div>
             ))}

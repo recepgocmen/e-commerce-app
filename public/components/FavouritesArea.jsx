@@ -12,12 +12,11 @@ function FavouritesArea() {
     isLoading,
     favouriteData,
     setFavouriteData,
+    addFavourite,
     isFavourite,
     setIsFavourite,
-    favouritesCount,
-    setFavouritesCount,
-    favourites,
-    setFavourites,
+    addToCart,
+    idHandler,
   } = useContext(AppContext);
 
   return (
@@ -55,6 +54,11 @@ function FavouritesArea() {
                   key={item.id}
                   data={item}
                   setFavouriteData={setFavouriteData}
+                  addFavourite={addFavourite}
+                  isFavourite={isFavourite}
+                  setIsFavourite={setIsFavourite}
+                  addToCart={addToCart}
+                  idHandler={idHandler}
                 />
               </div>
             ))}

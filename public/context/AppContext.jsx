@@ -31,9 +31,9 @@ export const AppProvider = ({ children }) => {
     setIsOpen(false);
   };
 
-  const addToCart = (item) => {
-    setCartData([...cartData, item]);
-    console.log(cartData);
+  const addToCart = (id) => {
+    const selectedCart = allData?.filter((item) => item.id === id);
+    setCartData({ cartData, ...selectedCart });
     setCartCount((prevCount) => prevCount + 1);
   };
 

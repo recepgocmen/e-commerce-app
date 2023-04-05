@@ -4,7 +4,7 @@ import MainArea from "../../public/components/MainArea";
 const Home = () => {
   return (
     <>
-      <Navbar />
+      <Navbar /> {/*  includes logo, darkmode,cart and favourites icons */}
       <MainArea /> {/*  includes welcome title and product cards */}
     </>
   );

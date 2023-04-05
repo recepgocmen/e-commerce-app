@@ -33,7 +33,7 @@ export const AppProvider = ({ children }) => {
   };
 
   const addToCart = (id) => {
-    const selectedCart = allData?.filter((item) => item.id === id);
+    const selectedCart = data?.filter((item) => item.id === id);
     setCartData({ cartData, ...selectedCart });
     setCartCount((prevCount) => prevCount + 1);
   };

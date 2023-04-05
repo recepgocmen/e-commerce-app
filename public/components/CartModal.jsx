@@ -1,5 +1,5 @@
 import Modal from "@mui/material/Modal";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import AppContext from "../context/AppContext";
 import { Box, CardMedia } from "@mui/material";
 import { Typography, IconButton } from "@mui/material";
@@ -17,6 +17,16 @@ const CartModal = () => {
     productCount,
     setProductCount,
   } = useContext(AppContext);
+
+  const getSubtotal = (cartData, productCount) => {
+    let subtotal = 0;
+    cartData?.forEach((item) => {
+      subtotal += item.price * productCount;
+    });
+    return subtotal;
+  };
+
+  const subtotal = getSubtotal(cartData, productCount);
 
   const deleteItem = (id) => {
     const newCartData = cartData.filter((item) => item.id !== id);
@@ -44,6 +54,7 @@ const CartModal = () => {
           minWidth: "700px",
           minHeight: "700px",
           overflow: "scroll",
+          maxHeight: "80vh", // add this line
         }}
       >
         <Typography
@@ -128,6 +139,33 @@ const CartModal = () => {
             </Box>
           ))
         )}
+        <Box
+          sx={{
+            border: "1px solid black",
+            fontSize: "0.8rem",
+            px: "2rem",
+            my: "2rem",
+          }}
+        >
+          <Typography variant="body1" component="p" mb={2} color={"black"}>
+            Order Summary
+          </Typography>
+          <Typography variant="body1" component="p" mb={2} color={"black"}>
+            Subtotal ({productCount} item) : {` $${subtotal}`}
+          </Typography>
+          <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
+            <IconButton
+              sx={{
+                border: "1px solid black",
+                fontSize: "0.8rem",
+                borderRadius: 2,
+                m: "1rem",
+              }}
+            >
+              Proceed to checkout
+            </IconButton>
+          </Box>
+        </Box>
       </Box>
     </Modal>
   );

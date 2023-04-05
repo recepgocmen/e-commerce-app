@@ -10,18 +10,21 @@ import {
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import DeleteIcon from "@mui/icons-material/Delete";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
+import { useContext } from "react";
+import AppContext from "../context/AppContext";
 
-export default function RecipeReviewCard({
-  data,
-  addFavourite,
-  isFavourite,
-  setIsFavourite,
-  productCount,
-  setProductCount,
-}) {
+export default function RecipeReviewCard({ data }) {
+  const {
+    isFavourite,
+    setIsFavourite,
+    addFavourite,
+    productCount,
+    setProductCount,
+    addToCart,
+    darkMode,
+  } = useContext(AppContext);
   const { id, title, images, price, description } = data;
 
   return (
@@ -31,6 +34,7 @@ export default function RecipeReviewCard({
         justifyContent: "center",
         alignItems: "center",
         height: "100vh",
+        backgroundColor: darkMode ? "black" : "white",
       }}
     >
       <Card
@@ -84,9 +88,6 @@ export default function RecipeReviewCard({
             >
               <AddIcon />
             </IconButton>
-            <IconButton onClick={() => deleteItem(item.id)}>
-              <DeleteIcon />
-            </IconButton>
           </Box>
 
           <Box
@@ -111,7 +112,10 @@ export default function RecipeReviewCard({
             </Box>
 
             <Box sx={{ display: "flex", alignItems: "center" }}>
-              <IconButton aria-label="add to cart">
+              <IconButton
+                onClick={() => addToCart(id)}
+                aria-label="add to cart"
+              >
                 <ShoppingCartIcon />
               </IconButton>
               <IconButton

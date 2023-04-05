@@ -5,14 +5,7 @@ import AppContext from "../../public/context/AppContext";
 import useSWR from "swr";
 
 function Detail() {
-  const {
-    id,
-    isFavourite,
-    setIsFavourite,
-    addFavourite,
-    productCount,
-    setProductCount,
-  } = useContext(AppContext);
+  const { id } = useContext(AppContext);
 
   const fetcher = () =>
     fetch(`https://dummyjson.com/products/${id}`).then((res) => res.json());
@@ -25,16 +18,8 @@ function Detail() {
   return (
     <div>
       <Navbar />
-      {data && (
-        <DetailedCard
-          data={data}
-          isFavourite={isFavourite}
-          setIsFavourite={setIsFavourite}
-          addFavourite={addFavourite}
-          productCount={productCount}
-          setProductCount={setProductCount}
-        />
-      )}
+      {isLoading && <div>Loading...</div>}
+      {data && <DetailedCard data={data} />}
     </div>
   );
 }

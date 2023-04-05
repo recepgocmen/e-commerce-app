@@ -10,7 +10,6 @@ import {
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useState } from "react";
 
 export default function CardComponent({
   data,
@@ -20,7 +19,6 @@ export default function CardComponent({
   addToCart,
   isFavourite,
   setIsFavourite,
-  addFavourite,
 }) {
   const { id, title, images, price, description } = data;
 

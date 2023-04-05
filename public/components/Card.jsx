@@ -18,9 +18,11 @@ export default function CardComponent({
   idHandler,
   enableDeleteButton = false,
   addToCart,
+  isFavourite,
+  setIsFavourite,
+  addFavourite,
 }) {
   const { id, title, images, price, description } = data;
-  const [isFavourite, setIsFavourite] = useState(false);
 
   return (
     <Card
@@ -40,6 +42,7 @@ export default function CardComponent({
         height="50"
         image={images[0]}
         alt={`product ${id} image`}
+        onClick={() => idHandler(id)}
       />
       <CardHeader
         action={

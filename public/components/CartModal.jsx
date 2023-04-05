@@ -1,11 +1,24 @@
 import Modal from "@mui/material/Modal";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import AppContext from "../context/AppContext";
-import { Box } from "@mui/material";
-import { Typography } from "@mui/material";
+import { Box, CardMedia } from "@mui/material";
+import { Typography, IconButton } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const CartModal = () => {
-  const { isOpen, handleClose, cartData } = useContext(AppContext);
+  const { isOpen, handleClose, cartData, setCartData, setCartCount } =
+    useContext(AppContext);
+  const [productCount, setProductCount] = useState(1);
+
+  const deleteItem = (id) => {
+    const newCartData = cartData.filter((item) => item.id !== id);
+    setCartCount((productCount) => productCount - 1);
+    setCartData(newCartData);
+  };
+
+  console.log("cartData", cartData);
 
   return (
     <Modal
@@ -22,8 +35,9 @@ const CartModal = () => {
           backgroundColor: "white",
           boxShadow: 24,
           p: 4,
-          minWidth: "500px",
-          minHeight: "500px",
+          minWidth: "700px",
+          minHeight: "700px",
+          overflow: "scroll",
         }}
       >
         <Typography
@@ -35,6 +49,7 @@ const CartModal = () => {
         >
           Shopping Cart
         </Typography>
+
         {cartData.length === 0 ? (
           <Typography
             id="modal-description"
@@ -46,20 +61,63 @@ const CartModal = () => {
           </Typography>
         ) : (
           cartData?.map((item) => (
-            <Box key={item.id} sx={{ display: "flex", mb: 2 }}>
+            <Box
+              key={item.id}
+              sx={{
+                display: "flex",
+                mb: 4,
+                border: "1px solid black",
+                color: "black",
+              }}
+            >
               <Box sx={{ flex: 1 }}>
-                <Image
-                  src={item.image}
-                  alt={item.title}
-                  width={100}
-                  height={100}
+                <CardMedia
+                  sx={{
+                    minWidth: 100,
+                    minHeight: 200,
+                  }}
+                  component="img"
+                  height="50"
+                  image={item?.images[0]}
+                  alt={`product image`}
                 />
               </Box>
-              <Box sx={{ flex: 3, pl: 2 }}>
-                <Typography variant="body1">{item.title}</Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {item.price}
+              <Box sx={{ flex: 3, pl: 4, position: "relative", width: 80 }}>
+                <Typography variant="h6" mb={2}>
+                  {item.title}
                 </Typography>
+                <Typography variant="body1" mb={2}>
+                  {item.description}
+                </Typography>
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <IconButton
+                    onClick={() =>
+                      setProductCount((productCount) => productCount - 1)
+                    }
+                    disabled={productCount === 0}
+                  >
+                    <RemoveIcon />
+                  </IconButton>
+                  <Typography variant="h6" mx={2}>
+                    {productCount}
+                  </Typography>
+                  <IconButton
+                    onClick={() =>
+                      setProductCount((productCount) => productCount + 1)
+                    }
+                  >
+                    <AddIcon />
+                  </IconButton>
+                  <IconButton onClick={() => deleteItem(item.id)}>
+                    <DeleteIcon />
+                  </IconButton>
+
+                  <Box sx={{ position: "absolute", right: 0, bottom: 0 }}>
+                    <Typography variant="h6" mb={2}>
+                      {`$ ${item.price * productCount}`}
+                    </Typography>
+                  </Box>
+                </Box>
               </Box>
             </Box>
           ))
@@ -68,4 +126,5 @@ const CartModal = () => {
     </Modal>
   );
 };
+
 export default CartModal;

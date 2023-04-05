@@ -40,7 +40,6 @@ export default function CardComponent({
         height="50"
         image={images[0]}
         alt={`product ${id} image`}
-        onClick={() => idHandler(id)}
       />
       <CardHeader
         action={
@@ -76,7 +75,7 @@ export default function CardComponent({
         disableSpacing
         sx={{ position: "absolute", bottom: 0, right: 0 }}
       >
-        <IconButton aria-label="add to cart" onClick={() => console.log(id)}>
+        <IconButton aria-label="add to cart" onClick={() => addToCart(id)}>
           <ShoppingCartIcon />
           <Typography variant="button" display="inline">
             Add to Cart

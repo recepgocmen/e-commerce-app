@@ -12,15 +12,15 @@ function MainArea() {
     setFavouriteData,
     favouriteData,
     setFavouritesCount,
-    addToCart,
-    id,
-    setId,
     darkMode,
+    setCartData,
+    cartData,
+    setCartCount,
   } = useContext(AppContext);
 
   const router = useRouter();
 
-  //fetching data for main area
+  //fetching data from api with SWR
   const fetcher = () =>
     fetch("https://dummyjson.com/products")
       .then((res) => res.json())
@@ -32,22 +32,28 @@ function MainArea() {
   );
 
   function addFavourite(id) {
-    const itemToAdd = data.find((item) => item.id === id);
-    if (!favouriteData.includes(itemToAdd)) {
-      favouriteData.push(itemToAdd);
-      //second click on hearth icon, unfav condition
-    } else if (favouriteData.includes(itemToAdd)) {
-      favouriteData.filter((item) => item.id !== id);
+    const selectedProduct = data.find((item) => item.id === id);
+    let newFavouriteData = [...favouriteData]; // create a copy of the array
+    if (!newFavouriteData.includes(selectedProduct)) {
+      newFavouriteData.push(selectedProduct);
+    } else if (newFavouriteData.includes(selectedProduct)) {
+      newFavouriteData = newFavouriteData.filter((item) => item.id !== id);
     }
-    setFavouriteData(favouriteData);
-    setFavouritesCount(favouriteData?.length);
+    setFavouriteData(newFavouriteData);
+    setFavouritesCount(newFavouriteData.length);
   }
 
-  //for accessing card details
-  const idHandler = (id) => {
-    setId(id);
-    router?.push(`/${id}`);
-  };
+  function addToCart(id) {
+    const selectedProduct = data.find((item) => item.id === id);
+
+    // Check if the product is already in the cart
+    const isInCart = cartData.some((item) => item.id === selectedProduct.id);
+
+    if (!isInCart) {
+      setCartData((prevCartData) => [...prevCartData, selectedProduct]);
+      setCartCount((prevCount) => prevCount + 1);
+    }
+  }
 
   return (
     <>
@@ -65,14 +71,16 @@ function MainArea() {
         >
           Welcome to BuyMe
         </Typography>
-        {isLoading ? (
+        {isLoading && (
           <Typography
             variant="h5"
             sx={{ color: "red", textAlign: "center", margin: "24px" }}
           >
             Loading...
           </Typography>
-        ) : (
+        )}
+        {/* Card display area that coming from api  */}
+        {data && (
           <div style={{ display: "flex", flexWrap: "wrap" }}>
             {data?.map((item) => (
               <div style={{ flex: "30%" }}>
@@ -80,13 +88,13 @@ function MainArea() {
                   key={item.id}
                   data={item}
                   addFavourite={addFavourite}
-                  idHandler={idHandler}
                   addToCart={addToCart}
                 />
               </div>
             ))}
           </div>
         )}
+
         <CartModal />
       </Box>
     </>

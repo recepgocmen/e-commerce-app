@@ -7,11 +7,16 @@ import useSWR from "swr";
 function Detail() {
   const { id } = useContext(AppContext);
 
-  const fetcher = () =>
-    fetch(`https://dummyjson.com/products/${id}`).then((res) => res.json());
+  const fetcher = async (url) => {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error("An error occurred while fetching the data.");
+    }
+    return response.json();
+  };
 
   const { data, isLoading } = useSWR(
-    `https://dummyjson.com/products/`,
+    `https://dummyjson.com/products/${id}`,
     fetcher
   );
 

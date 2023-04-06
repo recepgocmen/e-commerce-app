@@ -13,7 +13,9 @@ export const AppProvider = ({ children }) => {
   const [isFavourite, setIsFavourite] = useState(false);
   const [favouriteData, setFavouriteData] = useState([]);
   const [id, setId] = useState(1);
-  const [productCount, setProductCount] = useState(1);
+  const [productCount, setProductCount] = useState([]);
+  const [productQuantities, setProductQuantities] = useState({});
+  const [selectedProductIds, setSelectedProductIds] = useState([]);
 
   const fetcher = () =>
     fetch("https://dummyjson.com/products")
@@ -33,22 +35,55 @@ export const AppProvider = ({ children }) => {
   };
 
   const addToCart = (id) => {
-    const selectedCart = data?.filter((item) => item.id === id);
-    setCartData({ cartData, ...selectedCart });
-    setCartCount((prevCount) => prevCount + 1);
+    const selectedCart = data?.find((item) => item.id === id);
+
+    if (!cartData.some((item) => item.id === id)) {
+      setCartData([...cartData, selectedCart]);
+    }
+
+    // Update the product count in the AppContext
+    setProductCount((prevProductCount) => ({
+      ...prevProductCount,
+      [id]: (prevProductCount[id] || 0) + 1,
+    }));
   };
 
   const removeFromCart = (item) => {
     setCartData(cartData.filter((i) => i.id !== item.id));
     setCartCount((prevCount) => prevCount - 1);
+
+    setProductCount((prevCount) => {
+      const existingItemIndex = prevCount.findIndex(
+        (countItem) => countItem.id === item.id
+      );
+      if (existingItemIndex >= 0) {
+        const updatedItem = {
+          ...prevCount[existingItemIndex],
+          count: prevCount[existingItemIndex].count - 1,
+        };
+        const updatedCount = [
+          ...prevCount.slice(0, existingItemIndex),
+          updatedItem,
+          ...prevCount.slice(existingItemIndex + 1),
+        ];
+        return updatedItem.count === 0
+          ? updatedCount.filter((countItem) => countItem.id !== item.id)
+          : updatedCount;
+      } else {
+        return prevCount;
+      }
+    });
   };
 
   function addFavourite(id) {
     const selectedProduct = data.find((item) => item.id === id);
+    console.log("n", [selectedProduct, favouriteData]);
     let newFavouriteData = [...favouriteData];
     if (!newFavouriteData.includes(selectedProduct)) {
+      console.log("here1");
       newFavouriteData.push(selectedProduct);
     } else if (newFavouriteData.includes(selectedProduct)) {
+      console.log("hjere2");
       newFavouriteData = newFavouriteData.filter((item) => item.id !== id);
     }
     setFavouriteData(newFavouriteData);
@@ -88,6 +123,10 @@ export const AppProvider = ({ children }) => {
     productCount,
     setProductCount,
     addFavourite,
+    productQuantities,
+    setProductQuantities,
+    selectedProductIds,
+    setSelectedProductIds,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

@@ -10,7 +10,8 @@ import {
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useState } from "react";
+import { useContext } from "react";
+import AppContext from "../context/AppContext";
 
 export default function CardComponent({
   data,
@@ -22,7 +23,16 @@ export default function CardComponent({
   setIsFavourite,
 }) {
   const { id, title, images, price, description } = data;
-  const [selectedProductIds, setSelectedProductIds] = useState([]);
+
+  const {
+    productCount,
+    removeFromCart,
+    selectedProductIds,
+    setSelectedProductIds,
+  } = useContext(AppContext);
+  //const quantity = productCount[id]?.count || 0;
+
+  //const [selectedProductIds, setSelectedProductIds] = useState([]);
   const handleFavourite = () => {
     setIsFavourite(!isFavourite);
     addFavourite(id);
@@ -63,7 +73,14 @@ export default function CardComponent({
             <IconButton
               aria-label="add to favourites"
               onClick={() => {
-                handleFavourite();
+                if (selectedProductIds.includes(id)) {
+                  setSelectedProductIds(
+                    selectedProductIds.filter((productId) => productId !== id)
+                  );
+                } else {
+                  setSelectedProductIds([...selectedProductIds, id]);
+                }
+                addFavourite(id);
               }}
             >
               <FavoriteIcon

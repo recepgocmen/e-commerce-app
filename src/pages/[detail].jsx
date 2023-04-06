@@ -23,8 +23,7 @@ function Detail() {
   return (
     <div>
       <Navbar />
-      {isLoading && <div>Loading...</div>}
-      {data && <DetailedCard data={data} />}
+      {isLoading ? <div>Loading...</div> : <DetailedCard data={data} />}
     </div>
   );
 }

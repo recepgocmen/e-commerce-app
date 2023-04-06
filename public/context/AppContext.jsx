@@ -13,7 +13,7 @@ export const AppProvider = ({ children }) => {
   const [isFavourite, setIsFavourite] = useState(false);
   const [favouriteData, setFavouriteData] = useState([]);
   const [id, setId] = useState(1);
-  const [productCount, setProductCount] = useState([]);
+  const [productCount, setProductCount] = useState(0);
   const [productQuantities, setProductQuantities] = useState({});
   const [selectedProductIds, setSelectedProductIds] = useState([]);
 

@@ -23,9 +23,13 @@ export default function RecipeReviewCard({ data }) {
     setProductCount,
     addToCart,
     darkMode,
+    selectedProductIds,
+    setSelectedProductIds,
+    id,
   } = useContext(AppContext);
-  const { id, title, images, price, description } = data;
-  const [selectedProductIds, setSelectedProductIds] = useState([]);
+  const { title, images, price, description } = data;
+
+  console.log("id from card detailed buggy", id);
 
   const handleFavourite = () => {
     setIsFavourite(!isFavourite);
@@ -127,7 +131,7 @@ export default function RecipeReviewCard({ data }) {
 
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <IconButton
-                onClick={() => addToCart(id)}
+                onClick={() => addToCart(selectedProductIds)}
                 aria-label="add to cart"
               >
                 <ShoppingCartIcon />

@@ -14,8 +14,14 @@ import { useContext } from "react";
 import AppContext from "../context/AppContext";
 
 export default function ButtonAppBar() {
-  const { darkMode, setDarkMode, cartCount, favouritesCount, toggleModal } =
-    useContext(AppContext);
+  const {
+    darkMode,
+    setDarkMode,
+    cartCount,
+    favouritesCount,
+    toggleModal,
+    productQuantities,
+  } = useContext(AppContext);
 
   return (
     <Box>
@@ -44,7 +50,13 @@ export default function ButtonAppBar() {
           </IconButton>
 
           <IconButton color="inherit" onClick={toggleModal}>
-            <Badge badgeContent={cartCount} color="error">
+            <Badge
+              badgeContent={Object.values(productQuantities).reduce(
+                (a, b) => a + b,
+                0
+              )}
+              color="error"
+            >
               <ShoppingCartIcon />
               <Typography variant="srOnly">Cart</Typography>
             </Badge>

@@ -19,8 +19,6 @@ export default function CardComponent({
   idHandler,
   enableDeleteButton = false,
   addToCart,
-  isFavourite,
-  setIsFavourite,
 }) {
   const { id, title, images, price, description } = data;
 

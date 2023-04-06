@@ -1,26 +1,23 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { useRouter } from "next/router";
-import { Box } from "@mui/material";
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Card from "../components/Card";
 import CartModal from "../components/CartModal";
-import useSWR from "swr";
 import AppContext from "../context/AppContext";
 
 function MainArea() {
   const {
-    setFavouriteData,
-    favouriteData,
-    setFavouritesCount,
     darkMode,
     setCartData,
     cartData,
     setCartCount,
     isFavourite,
     setIsFavourite,
-    setId,
     id,
+    setId,
     addFavourite,
+    data,
+    isLoading,
   } = useContext(AppContext);
 
   const router = useRouter();
@@ -30,18 +27,7 @@ function MainArea() {
     router?.push(`/${id}`);
   };
 
-  //fetching data from api with SWR
-  const fetcher = () =>
-    fetch("https://dummyjson.com/products")
-      .then((res) => res.json())
-      .then((data) => data?.products);
-
-  const { data, isLoading } = useSWR(
-    "https://dummyjson.com/api/products",
-    fetcher
-  );
-
-  function addToCart(id) {
+  const addToCart = (id) => {
     const selectedProduct = data.find((item) => item.id === id);
 
     // Check if the product is already in the cart
@@ -51,7 +37,7 @@ function MainArea() {
       setCartData((prevCartData) => [...prevCartData, selectedProduct]);
       setCartCount((prevCount) => prevCount + 1);
     }
-  }
+  };
 
   return (
     <>
@@ -78,7 +64,7 @@ function MainArea() {
           </Typography>
         )}
         {/* Card display area that coming from api  */}
-        {data && (
+        {data && !isLoading && (
           <div style={{ display: "flex", flexWrap: "wrap" }}>
             {data?.map((item) => (
               <div style={{ flex: "30%" }}>
@@ -95,7 +81,6 @@ function MainArea() {
             ))}
           </div>
         )}
-
         <CartModal />
       </Box>
     </>

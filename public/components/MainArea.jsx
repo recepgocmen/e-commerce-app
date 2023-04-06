@@ -27,6 +27,17 @@ function MainArea() {
     router?.push(`/${id}`);
   };
 
+  //fetching data from api with SWR
+  const fetcher = () =>
+    fetch("https://dummyjson.com/products")
+      .then((res) => res.json())
+      .then((data) => data?.products);
+
+  const { data, isLoading } = useSWR(
+    "https://dummyjson.com/api/products",
+    fetcher
+  );
+
   const addToCart = (id) => {
     const selectedProduct = data.find((item) => item.id === id);
 

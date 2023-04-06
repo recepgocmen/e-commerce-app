@@ -66,6 +66,7 @@ const CartModal = () => {
     });
   };
 
+
   const updateProductQuantity = (id, quantity) => {
     setProductQuantities((prevQuantities) => ({
       ...prevQuantities,
@@ -82,7 +83,6 @@ const CartModal = () => {
       deleteItem(id);
     }
   };
-
   return (
     <Modal
       open={isOpen}

@@ -13,6 +13,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useContext } from "react";
 import AppContext from "../context/AppContext";
 
+
 export default function CardComponent({
   data,
   addFavourite,
@@ -21,6 +22,20 @@ export default function CardComponent({
   addToCart,
 }) {
   const { id, title, images, price, description } = data;
+  const [selectedProductIds, setSelectedProductIds] = useState([]);
+  const handleFavourite = () => {
+    setIsFavourite(!isFavourite);
+    addFavourite(id);
+
+    // Toggle the selected product's id
+    if (selectedProductIds.includes(id)) {
+      setSelectedProductIds(
+        selectedProductIds.filter((productId) => productId !== id)
+      );
+    } else {
+      setSelectedProductIds([...selectedProductIds, id]);
+    }
+  };
 
   const { selectedProductIds, setSelectedProductIds } = useContext(AppContext);
   return (

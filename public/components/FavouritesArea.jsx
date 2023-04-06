@@ -1,9 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Box } from "@mui/material";
-import { Typography } from "@mui/material";
+import React, { useContext } from "react";
+import { Box, Typography, Grid } from "@mui/material";
 import Card from "./Card";
 import CartModal from "./CartModal";
-import useSWR from "swr";
 import AppContext from "../context/AppContext";
 
 function FavouritesArea() {
@@ -44,14 +42,13 @@ function FavouritesArea() {
               color: darkMode ? "white" : "red",
             }}
           >
-            You dont have any favourite product yet
+            You don't have any favourite product yet
           </Typography>
         ) : (
-          <div style={{ display: "flex", flexWrap: "wrap" }}>
+          <Grid container spacing={4}>
             {favouriteData?.map((item) => (
-              <div style={{ flex: "30%" }}>
+              <Grid item xs={12} sm={6} md={4} key={item.id}>
                 <Card
-                  key={item.id}
                   data={item}
                   setFavouriteData={setFavouriteData}
                   addFavourite={addFavourite}
@@ -60,9 +57,9 @@ function FavouritesArea() {
                   addToCart={addToCart}
                   idHandler={idHandler}
                 />
-              </div>
+              </Grid>
             ))}
-          </div>
+          </Grid>
         )}
         <CartModal />
       </Box>

@@ -10,6 +10,8 @@ import {
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { useContext } from "react";
+import AppContext from "../context/AppContext";
 
 export default function CardComponent({
   data,
@@ -22,13 +24,14 @@ export default function CardComponent({
 }) {
   const { id, title, images, price, description } = data;
 
+  const { selectedProductIds, setSelectedProductIds } = useContext(AppContext);
   return (
     <Card
       sx={{
         width: 345,
         height: 550,
         marginY: 4,
-        position: "relative", // Add position relative to the card container
+        position: "relative",
       }}
     >
       <CardMedia
@@ -48,11 +51,19 @@ export default function CardComponent({
             <IconButton
               aria-label="add to favourites"
               onClick={() => {
-                setIsFavourite(!isFavourite);
+                if (selectedProductIds.includes(id)) {
+                  setSelectedProductIds(
+                    selectedProductIds.filter((productId) => productId !== id)
+                  );
+                } else {
+                  setSelectedProductIds([...selectedProductIds, id]);
+                }
                 addFavourite(id);
               }}
             >
-              <FavoriteIcon color={isFavourite ? "error" : "inherit"} />
+              <FavoriteIcon
+                color={selectedProductIds.includes(id) ? "error" : "inherit"}
+              />
             </IconButton>
           </div>
         }

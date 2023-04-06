@@ -24,15 +24,8 @@ export default function CardComponent({
 }) {
   const { id, title, images, price, description } = data;
 
-  const {
-    productCount,
-    removeFromCart,
-    selectedProductIds,
-    setSelectedProductIds,
-  } = useContext(AppContext);
-  //const quantity = productCount[id]?.count || 0;
+  const { selectedProductIds, setSelectedProductIds } = useContext(AppContext);
 
-  //const [selectedProductIds, setSelectedProductIds] = useState([]);
   const handleFavourite = () => {
     setIsFavourite(!isFavourite);
     addFavourite(id);
@@ -46,6 +39,7 @@ export default function CardComponent({
       setSelectedProductIds([...selectedProductIds, id]);
     }
   };
+  console.log("id from card working", id);
 
   return (
     <Card

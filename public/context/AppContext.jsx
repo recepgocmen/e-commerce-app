@@ -43,13 +43,9 @@ export const AppProvider = ({ children }) => {
     setCartCount((prevCount) => prevCount - 1);
   };
 
-  // const addToFavourites = (item) => {
-  //   setFavourites([...favourites, item]);
-  //   setFavouritesCount((prevCount) => prevCount + 1);
-  // };
   function addFavourite(id) {
     const selectedProduct = data.find((item) => item.id === id);
-    let newFavouriteData = [...favouriteData]; // create a copy of the array
+    let newFavouriteData = [...favouriteData];
     if (!newFavouriteData.includes(selectedProduct)) {
       newFavouriteData.push(selectedProduct);
     } else if (newFavouriteData.includes(selectedProduct)) {

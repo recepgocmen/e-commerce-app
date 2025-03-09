@@ -56,16 +56,10 @@ function MainArea() {
         sx={{
           textAlign: "center",
           paddingX: 12,
+          paddingTop: 4,
           backgroundColor: darkMode ? "black" : "white",
         }}
       >
-        <Typography
-          variant="h3"
-          sx={{ paddingY: 4 }}
-          color={darkMode ? "white" : "black"}
-        >
-          Welcome to BuyMe
-        </Typography>
         {isLoading && (
           <Typography
             variant="h5"
@@ -76,21 +70,28 @@ function MainArea() {
         )}
         {/* Card display area that coming from api  */}
         {data && (
-          <div style={{ display: "flex", flexWrap: "wrap" }}>
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+              gap: "2rem",
+              maxWidth: "1400px",
+              margin: "0 auto",
+              padding: "0 1rem",
+            }}
+          >
             {data?.map((item) => (
-              <div style={{ flex: "30%" }}>
-                <Card
-                  key={item.id}
-                  data={item}
-                  addFavourite={addFavourite}
-                  isFavourite={isFavourite}
-                  setIsFavourite={setIsFavourite}
-                  addToCart={addToCart}
-                  idHandler={idHandler}
-                />
-              </div>
+              <Card
+                key={item.id}
+                data={item}
+                addFavourite={addFavourite}
+                isFavourite={isFavourite}
+                setIsFavourite={setIsFavourite}
+                addToCart={addToCart}
+                idHandler={idHandler}
+              />
             ))}
-          </div>
+          </Box>
         )}
 
         <CartModal />

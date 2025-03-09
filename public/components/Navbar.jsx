@@ -25,31 +25,60 @@ export default function ButtonAppBar() {
 
   return (
     <Box>
-      <AppBar sx={{ backgroundColor: darkMode && "gray" }} position="static">
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          ></IconButton>
-          <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
-            <Link href="/">BuyMe</Link>
+      <AppBar
+        position="static"
+        sx={{
+          background: darkMode
+            ? "linear-gradient(to right, #1e1e1e, #2d2d2d)"
+            : "linear-gradient(to right, #2563eb, #3b82f6)",
+          boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+        }}
+      >
+        <Toolbar sx={{ maxWidth: "1400px", width: "100%", margin: "0 auto" }}>
+          <Typography
+            variant="h5"
+            component="div"
+            sx={{
+              flexGrow: 1,
+              fontWeight: 600,
+              background: darkMode
+                ? "linear-gradient(to right, #fff, #e5e7eb)"
+                : "linear-gradient(to right, #fff, #f3f4f6)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
+          >
+            <Link href="/">TrendMart</Link>
           </Typography>
 
-          <IconButton color="inherit">
+          <IconButton
+            color="inherit"
+            sx={{
+              ml: 1,
+              "&:hover": {
+                transform: "scale(1.1)",
+                transition: "transform 0.2s",
+              },
+            }}
+          >
             <Badge badgeContent={favouritesCount} color="error">
               <Link href="/favourites">
-                <a>
-                  <FavoriteIcon />
-                  <Typography variant="srOnly">Favourites</Typography>
-                </a>
+                <FavoriteIcon />
               </Link>
             </Badge>
           </IconButton>
 
-          <IconButton color="inherit" onClick={toggleModal}>
+          <IconButton
+            color="inherit"
+            onClick={toggleModal}
+            sx={{
+              ml: 1,
+              "&:hover": {
+                transform: "scale(1.1)",
+                transition: "transform 0.2s",
+              },
+            }}
+          >
             <Badge
               badgeContent={Object.values(productQuantities).reduce(
                 (a, b) => a + b,
@@ -58,11 +87,20 @@ export default function ButtonAppBar() {
               color="error"
             >
               <ShoppingCartIcon />
-              <Typography variant="srOnly">Cart</Typography>
             </Badge>
           </IconButton>
 
-          <IconButton color="inherit" onClick={() => setDarkMode(!darkMode)}>
+          <IconButton
+            color="inherit"
+            onClick={() => setDarkMode(!darkMode)}
+            sx={{
+              ml: 1,
+              "&:hover": {
+                transform: "scale(1.1)",
+                transition: "transform 0.2s",
+              },
+            }}
+          >
             {darkMode ? <Brightness4Icon /> : <Brightness7Icon />}
           </IconButton>
         </Toolbar>

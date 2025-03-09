@@ -3,7 +3,7 @@
 ## About
 This is an e-commerce app built with Next.js, Material UI, and useSWR for API calls. It also utilizes the Context API for global state management. The app features a favourites page, add to cart module, product detail page, and dark mode theme.
 
-The app can be accessed on [HERE](https://e-commerce-app-mocha-eta.vercel.app/).
+The app can be accessed on [HERE](https://buyfromtrendmart.vercel.app/).
 
 ## Features
 
